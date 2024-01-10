@@ -2,6 +2,8 @@ const { URL } = require("url");
 const { nanoid } = require("nanoid");
 const { isUserValid } = require("./user.controller");
 const { UrlModel } = require("../models/url.model");
+const mongoose = require("mongoose");
+const validator = require("validator");
 
 const shortURLController = async (req, res) => {
     try {
@@ -12,7 +14,9 @@ const shortURLController = async (req, res) => {
                 "url is required"
             );
         }
-        const isValidUrl = new URL(url);
+        if (!validator.isURL(url)) {
+            throw new Error("URL is invalid");
+        }
 
         const urlShortener = new UrlModel({
             originalUrl: url,
@@ -39,8 +43,8 @@ const shortURLController = async (req, res) => {
 
 const getAllUrls = async (req, res) => {
     try {
-        const { userId } = req.headers.userId;
-        const urls = await UrlModel.find({ "user.id": userId }, { originalUrl: 1, shortUrl: 1, visits: 1, createdAt: 1, _id: 1 }).sort({ createdAt: -1 });
+        const { userId } = req.headers;
+        const urls = await UrlModel.find({ "user": mongoose.Types.ObjectId(userId) }, { originalUrl: 1, shortUrl: 1, visits: 1, createdAt: 1, _id: 1, user: 1 }).sort({ createdAt: -1 });
         res.status(200).json({
             "success": true,
             "urls": urls

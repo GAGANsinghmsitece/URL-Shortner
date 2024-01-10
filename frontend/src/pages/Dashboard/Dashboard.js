@@ -152,12 +152,19 @@ const Dashboard = () => {
                   placeholder="Enter your URL here"
                 />
                 <Button onClick={submitSignUp}>Shorten URL!</Button>
-                {shortedURL !== null && <div className={styles.CopyToClipBoard}>
-                  <div className={styles.CopyToClipBoard__Left}>{shortedURL}</div>
-                  <div className={styles.CopyToClipBoard__Right} onClick={copyURLToClipBoard}>
-                    <Icon as={CopyIcon} />
-                  </div>
-                </div>}
+                {shortedURL !== null &&
+                  <div
+                    className={styles.CopyToClipBoard}
+                  >
+                    <div
+                      className={styles.CopyToClipBoard__Left}
+                    >
+                      {shortedURL}
+                    </div>
+                    <div className={styles.CopyToClipBoard__Right} onClick={copyURLToClipBoard}>
+                      <Icon as={CopyIcon} />
+                    </div>
+                  </div>}
               </Stack>
             </Center>
           </Container>
@@ -194,6 +201,8 @@ const Dashboard = () => {
                       </h2>
                       <AccordionPanel pb={4}>
                         Original Link:- {tx.originalUrl}
+                        <br />
+                        Shortened Link:-  {generateLink(tx.shortUrl)}
                         <br />
                         No. of Visits:- {tx.visits}
                       </AccordionPanel>

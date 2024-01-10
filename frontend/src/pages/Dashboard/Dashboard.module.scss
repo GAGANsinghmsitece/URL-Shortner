@@ -13,7 +13,10 @@
     padding-bottom: 15px;
     border-radius: 15px;
 
-    &__Left {}
+    &__Left {
+        overflow: auto;
+        padding-right: 5px;
+    }
 
     &__Right {
         display: block;

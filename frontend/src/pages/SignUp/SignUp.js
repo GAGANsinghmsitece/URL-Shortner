@@ -27,7 +27,6 @@ const SignUp = () => {
     try {
       const isValidEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
       e.preventDefault();
-      console.log(email, password);
       if (!email.match(isValidEmail)) {
         showToastMessage("Validation Error", "This email is not valid");
         return;
