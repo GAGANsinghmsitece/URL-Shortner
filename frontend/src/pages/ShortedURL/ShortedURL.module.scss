@@ -1,0 +1,16 @@
+.ShortedUrl {
+    &__LoadingPlaceholder {
+        color: #2b6cb0;
+        font-size: 25px;
+    }
+
+    &__Error {
+        font-size: 30px;
+        color: #e53e3e;
+    }
+
+    &__Success {
+        font-size: 30px;
+        color: #38a169;
+    }
+}
