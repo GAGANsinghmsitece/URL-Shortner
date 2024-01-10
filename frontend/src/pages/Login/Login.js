@@ -87,7 +87,7 @@ const Login = () => {
             placeholder="password"
           />
           <Button onClick={submitSignUp}>Login</Button>
-          <Text fontSize='md'>Didn't have a account? <a href={AppRoutes.Login} className={styles.Login__Link}>Signup Now</a></Text>
+          <Text fontSize='md'>Didn't have a account? <a href={AppRoutes.Signup} className={styles.Login__Link}>Signup Now</a></Text>
         </Stack>
       </Center>
     </Container >
