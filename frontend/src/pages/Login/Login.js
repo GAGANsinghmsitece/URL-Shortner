@@ -16,6 +16,7 @@ import endpoints from '../../helpers/endpoint';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import AppRoutes from '../../helpers/routes';
+import UserForm from '../../components/UserForm/UserForm';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -32,10 +33,9 @@ const Login = () => {
     });
   }
 
-  const submitSignUp = async (e) => {
+  const submitLogin = async (email, password) => {
     try {
       const isValidEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-      e.preventDefault();
       if (!email.match(isValidEmail)) {
         showToastMessage("Validation Error", "This email is not valid");
         return;
@@ -61,36 +61,15 @@ const Login = () => {
     }
   }
   return (
-    <Container display="block" pos="fixed" top="0px" left="0px" minWidth="100vw" minHeight="100vh">
-      <Center height="100vh">
-        <Stack width={"400px"}>
-          <Heading as="h1">URL Shortner</Heading>
-          <Text fontSize='xl'>Welcome Back, let's get you back to URL Shortening</Text>
-          <Input
-            type='email'
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            name='email'
-            required={true}
-            placeholder="Email"
-          />
-          <Input
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            type="password"
-            name='password'
-            required={true}
-            placeholder="password"
-          />
-          <Button onClick={submitSignUp}>Login</Button>
-          <Text fontSize='md'>Didn't have a account? <a href={AppRoutes.Signup} className={styles.Login__Link}>Signup Now</a></Text>
-        </Stack>
-      </Center>
-    </Container >
+    <UserForm
+      title="URL Shortner"
+      caption="Welcome Back, let's get you back to URL Shortening"
+      onSubmit={submitLogin}
+      footerCaption="Didn't have a account?"
+      footerURL={AppRoutes.Signup}
+      footerURLPlaceholder="Signup Now"
+      buttonText="Login"
+    />
   );
 }
 

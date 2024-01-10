@@ -7,10 +7,9 @@ import endpoints from '../../helpers/endpoint';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import AppRoutes from '../../helpers/routes';
+import UserForm from '../../components/UserForm/UserForm';
 
 const SignUp = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -23,10 +22,9 @@ const SignUp = () => {
     });
   }
 
-  const submitSignUp = async (e) => {
+  const submitSignUp = async (email, password) => {
     try {
       const isValidEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-      e.preventDefault();
       if (!email.match(isValidEmail)) {
         showToastMessage("Validation Error", "This email is not valid");
         return;
@@ -50,36 +48,17 @@ const SignUp = () => {
     }
   }
   return (
-    <Container display="block" pos="fixed" top="0px" left="0px" minWidth="100vw" minHeight="100vh">
-      <Center height="100vh">
-        <Stack width={"400px"}>
-          <Heading as="h1">URL Shortner</Heading>
-          <Text fontSize='xl'>Create a account and start shortening your URL</Text>
-          <Input
-            type='email'
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            name='email'
-            required={true}
-            placeholder="Email"
-          />
-          <Input
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            type="password"
-            name='password'
-            required={true}
-            placeholder="password"
-          />
-          <Button onClick={submitSignUp}>Signup</Button>
-          <Text fontSize='md'>Already have an account? <a href={AppRoutes.Login} className={styles.SignUp__Link}>Login Now</a></Text>
-        </Stack>
-      </Center>
-    </Container >
+
+    <UserForm
+      title="URL Shortner"
+      caption="Create a account and start shortening your URL"
+      onSubmit={submitSignUp}
+      footerCaption="Already have an account"
+      footerURL={AppRoutes.Login}
+      footerURLPlaceholder="Login Now"
+      buttonText="SignUp"
+    />
+
   );
 }
 
