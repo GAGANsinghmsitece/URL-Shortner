@@ -6,11 +6,13 @@ import { Box, Center, Container, Spinner } from '@chakra-ui/react';
 import { WarningIcon, CheckIcon } from "@chakra-ui/icons";
 import endpoints from '../../helpers/endpoint';
 import axios from 'axios';
+import LinkStateLoader from '../../components/LinkStateLoader/LinkStateLoader';
 
 const ShortedUrl = () => {
   const { hash } = useParams();
   const [externalURL, setExternalURL] = useState(null);
   const [error, setError] = useState(null);
+
   useEffect(() => {
     axios.get(`${endpoints.ResolveURL}${hash}`, {
       headers: {
@@ -30,29 +32,30 @@ const ShortedUrl = () => {
       window.location.replace(externalURL);
     }
   }, [externalURL]);
+
   return (
     <div className={styles.ShortedUrl} data-testid="ShortedUrl">
       <Container minW="100vw" minH="100vh">
         <Center height="100vh">
           {error === null ?
             externalURL === null ?
-              <Box justifyContent="center">
-
-                <Center paddingBottom="20px">
-                  <Spinner size="xl" color="blue.600" />
-                </Center>
-                <p className={styles.ShortedUrl__LoadingPlaceholder}>
-                  Getting Information...
-                </p>
-              </Box> : <Box justifyContent="center">
-                <Center paddingBottom="20px">
-                  <CheckIcon boxSize="60px" color="green.500" />
-                </Center><p className={`${styles.ShortedUrl__Success}`}>Redirecting you now</p>
-              </Box> : <Box justifyContent="center">
-              <Center paddingBottom="20px">
-                <WarningIcon boxSize="40px" color="red.500" />
-              </Center><p className={`${styles.ShortedUrl__Error}`}>{error}</p>
-            </Box>}
+              <LinkStateLoader
+                icon={<Spinner size="xl" color="blue.600" />}
+                text="Getting Information..."
+                textStyle={styles.ShortedUrl__LoadingPlaceholder}
+              />
+              :
+              <LinkStateLoader
+                icon={<CheckIcon boxSize="60px" color="green.500" />}
+                text="Redirecting you now"
+                textStyle={styles.ShortedUrl__Success}
+              /> :
+            <LinkStateLoader
+              icon={<WarningIcon boxSize="40px" color="red.500" />}
+              text={error}
+              textStyle={styles.ShortedUrl__Error}
+            />
+          }
         </Center>
       </Container>
     </div>
