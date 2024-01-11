@@ -13,6 +13,7 @@ import axios from "axios";
 import HistoryPreloader from '../../components/HistoryPreloader/HistoryPreloader';
 import ListHistoryComponent from '../../components/ListHistoryComponent/ListHistoryComponent';
 import LinkShortComponent from '../../components/LinkShortComponent/LinkShortComponent';
+import EmptyHistoryState from '../../components/EmptyHistoryState/EmptyHistoryState';
 
 const Dashboard = () => {
   const toast = useToast();
@@ -66,7 +67,9 @@ const Dashboard = () => {
             {previousURL === null ?
               <HistoryPreloader />
               :
-              <ListHistoryComponent data={previousURL} />
+              (previousURL.length === 0) ? <EmptyHistoryState /> :
+                <ListHistoryComponent data={previousURL} />
+
             }
           </Stack>
         </TabPanel>
