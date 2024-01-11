@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import styles from './SignUp.module.scss';
-import { Button, Center, Container, Flex, Heading, Input, Stack, Text } from '@chakra-ui/react';
+import React from 'react';
 import { useToast } from '@chakra-ui/react';
 import endpoints from '../../helpers/endpoint';
 import axios from "axios";

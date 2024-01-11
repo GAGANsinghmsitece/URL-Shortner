@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import styles from './ShortedURL.module.scss';
 import { useParams } from 'react-router-dom';
-import { Box, Center, Container, Spinner } from '@chakra-ui/react';
+import { Center, Container, Spinner } from '@chakra-ui/react';
 import { WarningIcon, CheckIcon } from "@chakra-ui/icons";
 import endpoints from '../../helpers/endpoint';
 import axios from 'axios';

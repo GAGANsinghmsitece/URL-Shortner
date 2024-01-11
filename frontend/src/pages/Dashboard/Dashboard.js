@@ -1,39 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import styles from './Dashboard.module.scss';
 import {
-  Button,
-  Center,
-  Container,
-  Flex,
-  Input,
   Stack,
   Tabs,
   TabList,
   TabPanels,
   Tab,
-  TabPanel,
-  Spinner,
-  List,
-  ListItem,
-  ListIcon,
-  AccordionItem,
-  Accordion,
-  Box,
-  AccordionPanel,
-  AccordionButton,
-  AccordionIcon,
-  Heading,
-  Text,
-  Icon
+  TabPanel
 } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react';
 import endpoints from '../../helpers/endpoint';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
-import AppRoutes from '../../helpers/routes';
-import validator from "validator";
-import { LinkIcon, CopyIcon } from '@chakra-ui/icons';
 import HistoryPreloader from '../../components/HistoryPreloader/HistoryPreloader';
 import ListHistoryComponent from '../../components/ListHistoryComponent/ListHistoryComponent';
 import LinkShortComponent from '../../components/LinkShortComponent/LinkShortComponent';
@@ -57,6 +33,7 @@ const Dashboard = () => {
       window.location.reload(true)
     }, 2000);
   }
+
   useEffect(() => {
     axios.get(endpoints.HistoryURL, {
       headers: {

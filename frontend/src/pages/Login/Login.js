@@ -1,16 +1,4 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import styles from './Login.module.scss';
-import {
-  Button,
-  Center,
-  Container,
-  Flex,
-  Heading,
-  Input,
-  Stack,
-  Text
-} from '@chakra-ui/react';
+import React from 'react';
 import { useToast } from '@chakra-ui/react';
 import endpoints from '../../helpers/endpoint';
 import axios from "axios";
@@ -19,8 +7,6 @@ import AppRoutes from '../../helpers/routes';
 import UserForm from '../../components/UserForm/UserForm';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const toast = useToast();
   const navigate = useNavigate();
 

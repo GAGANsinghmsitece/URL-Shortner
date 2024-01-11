@@ -1,32 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
-  Button,
-  Center,
   Container,
-  Flex,
-  Input,
-  Stack,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Spinner,
-  List,
-  ListItem,
-  ListIcon,
   AccordionItem,
   Accordion,
   Box,
   AccordionPanel,
   AccordionButton,
   AccordionIcon,
-  Heading,
-  Text,
-  Icon
+  Heading
 } from '@chakra-ui/react';
-import styles from './ListHistoryComponent.module.scss';
 import AppRoutes from '../../helpers/routes';
 
 const ListHistoryComponent = ({ data }) => {

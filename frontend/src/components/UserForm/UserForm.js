@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import styles from './UserForm.module.scss';
-import { Button, Center, Container, Flex, Heading, Input, Stack, Text } from '@chakra-ui/react';
-import { useToast } from '@chakra-ui/react';
-import endpoints from '../../helpers/endpoint';
-import axios from "axios";
-import { useNavigate } from 'react-router-dom';
-import AppRoutes from '../../helpers/routes';
-
+import {
+  Button,
+  Center,
+  Container,
+  Heading,
+  Input,
+  Stack,
+  Text
+} from '@chakra-ui/react';
 const UserForm = ({
   title,
   caption,

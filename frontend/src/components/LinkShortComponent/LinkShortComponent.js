@@ -1,36 +1,16 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import {
   Button,
   Center,
   Container,
-  Flex,
   Input,
   Stack,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Spinner,
-  List,
-  ListItem,
-  ListIcon,
-  AccordionItem,
-  Accordion,
-  Box,
-  AccordionPanel,
-  AccordionButton,
-  AccordionIcon,
   Heading,
-  Text,
   Icon
 } from '@chakra-ui/react';
-
-import { useNavigate } from 'react-router-dom';
 import AppRoutes from '../../helpers/routes';
 import validator from "validator";
-import { LinkIcon, CopyIcon } from '@chakra-ui/icons';
+import { CopyIcon } from '@chakra-ui/icons';
 import styles from './LinkShortComponent.module.scss';
 import { useToast } from '@chakra-ui/react';
 import axios from "axios";
