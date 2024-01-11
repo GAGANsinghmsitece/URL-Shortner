@@ -34,12 +34,12 @@ import { useNavigate } from 'react-router-dom';
 import AppRoutes from '../../helpers/routes';
 import validator from "validator";
 import { LinkIcon, CopyIcon } from '@chakra-ui/icons';
+import HistoryPreloader from '../../components/HistoryPreloader/HistoryPreloader';
+import ListHistoryComponent from '../../components/ListHistoryComponent/ListHistoryComponent';
+import LinkShortComponent from '../../components/LinkShortComponent/LinkShortComponent';
 
 const Dashboard = () => {
-  const [url, setURL] = useState('');
-  const [shortedURL, setShortedURL] = useState(null);
   const toast = useToast();
-  const test = window.location + '';
   const [previousURL, setPreviousURL] = useState(null);
 
   const showToastMessage = (title, message, status = "error") => {
@@ -73,55 +73,7 @@ const Dashboard = () => {
     });
   }, []);
 
-  const generateLink = (hash) => {
-    const urlArray = (window.location + '').split("/");
-    const resultedString = `${urlArray[0]}//${urlArray[2]}${AppRoutes.URL}${hash}`;
-    return resultedString;
-  }
-  const submitSignUp = async (e) => {
-    try {
-      e.preventDefault();
-      if (!validator.isURL(url)) {
-        showToastMessage("Invalid URL", "Kindly Check your URL");
-        return;
-      }
-      const response = await axios.post(endpoints.ShortURL, {
-        url
-      }, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-      if (response?.data?.success === true) {
-        showToastMessage("Success", "URL Shorted successfully", "success");
 
-        const urlArray = (window.location + '').split("/");
-        const resultedString = `${urlArray[0]}//${urlArray[2]}${AppRoutes.URL}${response?.data?.key}`;
-        if (resultedString) {
-          setShortedURL(resultedString);
-        }
-      }
-    } catch (err) {
-      if (err?.response) {
-        if (err?.response?.status === 401) {
-          handleTokenExpiry();
-        } else if (err?.response?.data?.success === false) {
-          showToastMessage("Server Error", err?.response?.data?.message);
-        }
-      };
-      console.log(err);
-      return;
-    }
-  }
-  const copyURLToClipBoard = () => {
-    try {
-      navigator.clipboard.writeText(shortedURL);
-      showToastMessage("Success", "Copied To Clipboard!!", "success");
-    } catch (err) {
-      console.log(err);
-      return;
-    }
-  }
   return (
     <Tabs variant='soft-rounded'>
       <TabList>
@@ -130,87 +82,14 @@ const Dashboard = () => {
       </TabList>
       <TabPanels>
         <TabPanel>
-          <Container
-            display="block"
-            minWidth="100vw"
-            minHeight="100vh"
-            padding="0px"
-            position="absolute"
-            left="0px"
-          >
-            <Center height="100vh">
-              <Stack width={"400px"}>
-                <Heading as="h1">Shorten your URL</Heading>
-                <Input
-                  type='text'
-                  value={url}
-                  onChange={(e) => {
-                    setURL(e.target.value);
-                  }}
-                  name='url'
-                  required={true}
-                  placeholder="Enter your URL here"
-                />
-                <Button onClick={submitSignUp}>Shorten URL!</Button>
-                {shortedURL !== null &&
-                  <div
-                    className={styles.CopyToClipBoard}
-                  >
-                    <div
-                      className={styles.CopyToClipBoard__Left}
-                    >
-                      {shortedURL}
-                    </div>
-                    <div className={styles.CopyToClipBoard__Right} onClick={copyURLToClipBoard}>
-                      <Icon as={CopyIcon} />
-                    </div>
-                  </div>}
-              </Stack>
-            </Center>
-          </Container>
+          <LinkShortComponent />
         </TabPanel>
         <TabPanel>
           <Stack>
             {previousURL === null ?
-              <Container>
-                <Flex gap={"8px"}>
-                  <Spinner />
-                  <p>Fetching History...</p>
-                </Flex>
-              </Container>
+              <HistoryPreloader />
               :
-              <Container
-                minWidth="100vw"
-                minHeight="100vh"
-                padding="0px"
-                paddingTop="0px"
-                position="absolute"
-                left="0px"
-              >
-                <Heading as="h1">History</Heading>
-                <Accordion padding="0px" allowToggle={true}>
-                  {previousURL.map((tx) =>
-                    <AccordionItem key={tx?._id}>
-                      <h2>
-                        <AccordionButton>
-                          <Box as="span" flex='1' textAlign='left'>
-                            {generateLink(tx.shortUrl)}
-                          </Box>
-                          <AccordionIcon />
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                        Original Link:- {tx.originalUrl}
-                        <br />
-                        Shortened Link:-  {generateLink(tx.shortUrl)}
-                        <br />
-                        No. of Visits:- {tx.visits}
-                      </AccordionPanel>
-                    </AccordionItem>
-
-                  )}
-                </Accordion>
-              </Container>
+              <ListHistoryComponent data={previousURL} />
             }
           </Stack>
         </TabPanel>
