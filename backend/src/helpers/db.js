@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 let dbConnection;
 module.exports = {
     connectToDb: (cb) => {
-        mongoose.connect("mongodb://localhost:27017/url-shortener").then((client) => {
+        mongoose.connect(process.env.MONGO_URL).then((client) => {
             dbConnection = client;
             return cb();
         }).catch(err => {
